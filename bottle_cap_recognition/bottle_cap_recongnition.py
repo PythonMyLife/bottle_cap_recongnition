@@ -61,42 +61,51 @@ class bottle_cap_recognition:
     def choose(self, canvas2):
         file = filedialog.askopenfilename(parent=self.root, initialdir="C:/", title='Choose an image.')
         self.photo = Image.open(file)
-        w, h = self.photo.size
+        image = self.photo
+        w, h = image.size
         if w > 640 or h > 320:
-            image = resize(640, 320, self.photo)
+            image = resize(640, 320, image)
         else:
-            image = self.photo
+            image = image
         filename = ImageTk.PhotoImage(image)
         canvas2.image = filename
         canvas2.create_image(320, 160, image=filename)
 
     def show(self, image):
-        w, h = self.photo.size
+        w, h = image.size
         if w > 640 or h > 320:
-            image = resize(640, 320, self.photo)
+            image = resize(640, 320, image)
         else:
-            image = self.photo
+            image = image
         file = ImageTk.PhotoImage(image)
         self.canvas3.image = file
         self.canvas3.create_image(320, 160, image=file)
 
     def front(self):
-        self.show(self.photo)
+        img_input = self.photo
+        img_output = img_input
+        self.show(img_output)
         long_text = '正面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
     def back(self):
-        self.show(self.photo)
+        img_input = self.photo
+        img_output = img_input
+        self.show(img_output)
         long_text = '背面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
     def profile(self):
-        self.show(self.photo)
+        img_input = self.photo
+        img_output = img_input
+        self.show(img_output)
         long_text = '侧面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
     def all(self):
-        self.show(self.photo)
+        img_input = self.photo
+        img_output = img_input
+        self.show(img_output)
         long_text = '正面瓶盖的坐标为\n' + '[1,1]' + '\n背面瓶盖的坐标为\n' + '[1,1]' + '\n侧面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
