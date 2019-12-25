@@ -188,12 +188,7 @@ class BottleCapRecognition:
         lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
         # 进行阈值分割
         thresh = cv2.threshold(gray, 20, 255, cv2.THRESH_BINARY)[1]
-<<<<<<< HEAD
-        
-        #cv2.imshow("Thresh", thresh)
-=======
         # cv2.imshow("thresh", thresh)
->>>>>>> e454290a1874d8b8329bd2c5f890b2b76039573f
         # 在二值图片中寻找轮廓
         cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
