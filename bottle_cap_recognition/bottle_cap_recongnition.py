@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 from tkinter import Tk, Canvas, Button, filedialog, StringVar, Label
 from PIL import Image, ImageTk
+from scipy.spatial import distance as dist
+from collections import OrderedDict
 import numpy as np
 import imutils
 import cv2
@@ -13,6 +15,50 @@ def resize(w_box, h_box, pil_image):
     width = int(w * factor)
     height = int(h * factor)
     return pil_image.resize((width, height), Image.ANTIALIAS)
+
+# 创建一个颜色标签类
+class ColorLabeler:
+	def __init__(self):
+		# 初始化一个颜色词典
+		colors = OrderedDict({
+			"red": (255, 0, 0),
+			"green": (0, 255, 0),
+			"blue": (0, 0, 255)})
+
+		# 为LAB图像分配空间
+		self.lab = np.zeros((len(colors), 1, 3), dtype="uint8")
+		self.colorNames = []
+
+		# 循环 遍历颜色词典
+		for (i, (name, rgb)) in enumerate(colors.items()):
+			# 进行参数更新
+			self.lab[i] = rgb
+			self.colorNames.append(name)
+
+		# 进行颜色空间的变换
+		self.lab = cv2.cvtColor(self.lab, cv2.COLOR_RGB2LAB)
+
+	def label(self, image, c):
+		# 根据轮廓构造一个mask，然后计算mask区域的平均值 
+		mask = np.zeros(image.shape[:2], dtype="uint8")
+		cv2.drawContours(mask, [c], -1, 255, -1)
+		mask = cv2.erode(mask, None, iterations=2)
+		mean = cv2.mean(image, mask=mask)[:3]
+
+		# 初始化最小距离
+		minDist = (np.inf, None)
+
+		# 遍历已知的LAB颜色值
+		for (i, row) in enumerate(self.lab):
+			# 计算当前l*a*b*颜色值与图像平均值之间的距离
+			d = dist.euclidean(row[0], mean)
+
+			# 如果当前的距离小于最小的距离，则进行变量更新
+			if d < minDist[0]:
+				minDist = (d, i)
+
+		# 返回最小距离对应的颜色值
+		return self.colorNames[minDist[1]]
 
 # 创建形状检测类
 class ShapeDetector:
@@ -59,22 +105,34 @@ class BottleCapRecognition:
         self.canvas1.create_window(80, 100, anchor='center', window=self.button_front)
 
         # 侧面检测按钮
-        self.button_profile = Button(self.root, text='侧面检测', command=lambda: self.profile())
+        self.button_profile = Button(self.root, text='侧面检测', command=lambda: self.profile("all"))
         self.canvas1.create_window(80, 150, anchor='center', window=self.button_profile)
+
+        # 红色侧面检测按钮
+        self.button_profile = Button(self.root, text='红色侧面检测', command=lambda: self.profile("red"))
+        self.canvas1.create_window(80, 200, anchor='center', window=self.button_profile)
+
+        # 黄色侧面检测按钮
+        self.button_profile = Button(self.root, text='黄色侧面检测', command=lambda: self.profile("green"))
+        self.canvas1.create_window(80, 250, anchor='center', window=self.button_profile)
+
+        # 蓝色侧面检测按钮
+        self.button_profile = Button(self.root, text='蓝色侧面检测', command=lambda: self.profile("blue"))
+        self.canvas1.create_window(80, 300, anchor='center', window=self.button_profile)
 
         # 背面检测按钮
         self.button_back = Button(self.root, text='背面检测', command=lambda: self.back())
-        self.canvas1.create_window(80, 200, anchor='center', window=self.button_back)
+        self.canvas1.create_window(80, 350, anchor='center', window=self.button_back)
 
         # 形态检测按钮
         self.button_all = Button(self.root, text='形态检测', command=lambda: self.all())
-        self.canvas1.create_window(80, 250, anchor='center', window=self.button_all)
+        self.canvas1.create_window(80, 400, anchor='center', window=self.button_all)
 
         # 输出语句
         self.output = StringVar()
         # 输出框
         self.text = Label(self.root, textvariable=self.output)
-        self.canvas1.create_window(80, 290, anchor='n', window=self.text)
+        self.canvas1.create_window(80, 440, anchor='n', window=self.text)
 
 
     def choose(self, canvas2):
@@ -114,7 +172,7 @@ class BottleCapRecognition:
         long_text = '背面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
-    def profile(self):
+    def profile(self, sc):
         long_text = '侧面瓶盖的坐标为'
         # 将PIL图像转化为opencv图像
         img_cv = cv2.cvtColor(np.array(self.photo), cv2.COLOR_RGB2BGR)
@@ -130,13 +188,18 @@ class BottleCapRecognition:
         lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
         # 进行阈值分割
         thresh = cv2.threshold(gray, 20, 255, cv2.THRESH_BINARY)[1]
+<<<<<<< HEAD
         
         #cv2.imshow("Thresh", thresh)
+=======
+        # cv2.imshow("thresh", thresh)
+>>>>>>> e454290a1874d8b8329bd2c5f890b2b76039573f
         # 在二值图片中寻找轮廓
         cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
         # 初始化形状检测器和颜色标签
         sd = ShapeDetector()
+        cl = ColorLabeler()
         # 遍历每一个轮廓
         for c in cnts:
             # 计算每一个轮廓的中心点
@@ -148,16 +211,30 @@ class BottleCapRecognition:
             cY = int((M["m01"] / M["m00"]) * ratio)
             # 进行颜色检测和形状检测
             shape = sd.detect(c)
-            #color = cl.label(lab, c)
+            color = cl.label(lab, c)
             # 进行坐标变换
             c = c.astype("float")
             c *= ratio
             c = c.astype("int")
-            text = "{}".format(shape)
-            if(text=="left"):
+            if sc == "all":
+                goal = "left"
+                text = "{}".format(shape)
+            else:
+                goal = sc + " left"
+                text = "{} {}".format(color, shape)
+
+            if(text==goal):
+                if sc == "all":
+                    cv2.fillPoly(img_cv,[c],(255, 255, 255))
+                if sc == "red":
+                    cv2.fillPoly(img_cv,[c],(0, 0, 255))
+                if sc == "green":
+                    cv2.fillPoly(img_cv,[c],(0, 255, 255))
+                if sc == "blue":
+                    cv2.fillPoly(img_cv,[c],(255, 0, 0))
                 # 绘制轮廓并显示结果
-                cv2.drawContours(img_cv, [c], -1, (0, 0, 255), 2)
-                cv2.putText(img_cv, text, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+                # cv2.drawContours(img_cv, [c], -1, (0, 0, 255), 2)
+                cv2.putText(img_cv, "*", (cX, cY), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
                 long_text += '\n[' + str(cX) + ',' + str(cY) + ']'
         # 将opencv图像转化为PIL图像
         img_output = Image.fromarray(cv2.cvtColor(img_cv,cv2.COLOR_BGR2RGB))
