@@ -7,6 +7,7 @@ import sys
 class my_window(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.button_open = self.ui.button_open
@@ -26,7 +27,7 @@ class my_window(QtWidgets.QMainWindow):
 
     def open_img(self):
         img_name, img_type = QtWidgets.QFileDialog.getOpenFileName(self.centralWidget, "打开图片", "",
-                                                                   "*.jpg;;*.png;;All Files(*)")
+                                                                   "*.jpg;;*.jpeg;;*.png;;All Files(*)")
         self.photo = Image.open(img_name)
         # w, h = self.photo.size
         w, h = self.resize_photo(self.label_1.width() - 1, self.label_1.height() - 1, self.photo)
