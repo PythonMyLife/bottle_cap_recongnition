@@ -104,25 +104,25 @@ class BottleCapRecognition:
         self.button_front = Button(self.root, text='正面检测', command=lambda: self.front())
         self.canvas1.create_window(80, 100, anchor='center', window=self.button_front)
 
+        # 反面检测按钮
+        self.button_back = Button(self.root, text='反面检测', command=lambda: self.back())
+        self.canvas1.create_window(80, 150, anchor='center', window=self.button_back)
+
         # 侧面检测按钮
         self.button_profile = Button(self.root, text='侧面检测', command=lambda: self.profile("all"))
-        self.canvas1.create_window(80, 150, anchor='center', window=self.button_profile)
+        self.canvas1.create_window(80, 200, anchor='center', window=self.button_profile)
 
         # 红色侧面检测按钮
         self.button_profile = Button(self.root, text='红色侧面检测', command=lambda: self.profile("red"))
-        self.canvas1.create_window(80, 200, anchor='center', window=self.button_profile)
+        self.canvas1.create_window(80, 250, anchor='center', window=self.button_profile)
 
         # 黄色侧面检测按钮
         self.button_profile = Button(self.root, text='黄色侧面检测', command=lambda: self.profile("yellow"))
-        self.canvas1.create_window(80, 250, anchor='center', window=self.button_profile)
+        self.canvas1.create_window(80, 300, anchor='center', window=self.button_profile)
 
         # 蓝色侧面检测按钮
         self.button_profile = Button(self.root, text='蓝色侧面检测', command=lambda: self.profile("blue"))
-        self.canvas1.create_window(80, 300, anchor='center', window=self.button_profile)
-
-        # 背面检测按钮
-        self.button_back = Button(self.root, text='背面检测', command=lambda: self.back())
-        self.canvas1.create_window(80, 350, anchor='center', window=self.button_back)
+        self.canvas1.create_window(80, 350, anchor='center', window=self.button_profile)
 
         # 形态检测按钮
         self.button_all = Button(self.root, text='形态检测', command=lambda: self.all())
@@ -159,17 +159,144 @@ class BottleCapRecognition:
         self.canvas3.create_image(320, 160, image=file)
 
     def front(self):
-        img_input = self.photo
-        img_output = img_input
+        long_text = '正面瓶盖的坐标为'
+        # 将PIL图像转化为opencv图像
+        target = cv2.cvtColor(np.array(self.photo), cv2.COLOR_RGB2BGR)
+        iheight, iwidth = target.shape[:2]
+        Array = np.zeros((iheight, iwidth))
+        Array150 = np.zeros((iheight, iwidth))
+        Array160 = np.zeros((iheight, iwidth))
+        # 引入模板
+        template = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/down1black150.jpg")
+        template1 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/down2black150.jpg")
+        template2 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/down3black150.jpg")
+        template3 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/up1black150.jpg")
+        template4 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/up2black150.jpg")
+        template5 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/up3black150.jpg")
+        theight150, twidth150 = template.shape[:2]
+        theight160, twidth160 = template3.shape[:2]
+        # 模板匹配
+        result = cv2.matchTemplate(target, template, cv2.TM_CCORR_NORMED)
+        result1 = cv2.matchTemplate(target, template1, cv2.TM_CCORR_NORMED)
+        result2 = cv2.matchTemplate(target, template2, cv2.TM_CCORR_NORMED)
+        result3 = cv2.matchTemplate(target, template3, cv2.TM_CCORR_NORMED)
+        result4 = cv2.matchTemplate(target, template4, cv2.TM_CCORR_NORMED)
+        result5 = cv2.matchTemplate(target, template5, cv2.TM_CCORR_NORMED)
+        height150, width150 = result.shape[:2]
+        height160, width160 = result3.shape[:2]
+        # 处理反面瓶盖
+        for i in range(height150):
+            for j in range(width150):
+                Array150[i + theight150 - 1, j + twidth150 - 1] = max(result[i, j], result1[i, j], result2[i, j])
+        # 处理正面瓶盖
+        for i in range(height160):
+            for j in range(width160):
+                Array160[i + theight160 - 1, j + twidth160 - 1] = max(result3[i, j], result4[i, j], result5[i, j])
+        # 减少正反瓶盖的相互干扰
+        for i in range(iheight):
+            for j in range(iwidth):
+                if Array150[i, j] - Array160[i, j] > -0.01:
+                    Array[i, j] = 0
+                else:
+                    Array[i, j] = Array160[i, j]
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
+        # 方框标记正面
+        cv2.rectangle(target, max_loc, (max_loc[0]-twidth160, max_loc[1]-theight160), (255, 255, 225), 2)
+        max_x = int((2*max_loc[0]-twidth160)/2)
+        max_y = int((2*max_loc[1]-theight160)/2)
+        cv2.putText(target, "*", (max_x-1, max_y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+        long_text += '\n[' + str(max_x) + ',' + str(max_y) + ']'
+        temp_loc = max_loc
+        other_loc = max_loc
+        numOfloc = 1
+
+        threshold = 0.95
+        loc = np.where(Array >= threshold)
+        wrong = 15
+        for other_loc in zip(*loc[::-1]):
+            if (temp_loc[0] + wrong < other_loc[0]) or (temp_loc[1] + wrong < other_loc[1]):
+                numOfloc = numOfloc + 1
+                temp_loc = other_loc
+                x = int((2*other_loc[0]-twidth160)/2)
+                y = int((2*other_loc[1]-theight160)/2)
+                if abs(max_x - x) > twidth160/2 or abs(max_y - y) > theight160/2:
+                    cv2.rectangle(target, other_loc, (other_loc[0] - twidth160, other_loc[1] - theight160), (255, 255, 255), 2)
+                    cv2.putText(target, "*", (x-1, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                    long_text += '\n[' + str(x) + ',' + str(y) + ']'
+        # 将opencv图像转化为PIL图像
+        img_output = Image.fromarray(cv2.cvtColor(target,cv2.COLOR_BGR2RGB))
         self.show(img_output)
-        long_text = '正面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
     def back(self):
-        img_input = self.photo
-        img_output = img_input
+        long_text = '反面瓶盖的坐标为'
+        # 将PIL图像转化为opencv图像
+        target = cv2.cvtColor(np.array(self.photo), cv2.COLOR_RGB2BGR)
+        iheight, iwidth = target.shape[:2]
+        Array = np.zeros((iheight, iwidth))
+        Array150 = np.zeros((iheight, iwidth))
+        Array160 = np.zeros((iheight, iwidth))
+        # 引入模板
+        # template = cv2.cvtColor(np.array(Image.open("./templete/up1black150.jpg")), cv2.COLOR_RGB2BGR)
+        template = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/up1black150.jpg")
+        template1 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/up2black150.jpg")
+        template2 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/up3black150.jpg")
+        template3 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/down1black150.jpg")
+        template4 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/down2black150.jpg")
+        template5 = cv2.imread("D:/myGithub/bottle_cap_recongnition/bottle_cap_recognition/templete/down3black150.jpg")
+        theight150, twidth150 = template.shape[:2]
+        theight160, twidth160 = template3.shape[:2]
+        # 模板匹配
+        result = cv2.matchTemplate(target, template, cv2.TM_CCORR_NORMED)
+        result1 = cv2.matchTemplate(target, template1, cv2.TM_CCORR_NORMED)
+        result2 = cv2.matchTemplate(target, template2, cv2.TM_CCORR_NORMED)
+        result3 = cv2.matchTemplate(target, template3, cv2.TM_CCORR_NORMED)
+        result4 = cv2.matchTemplate(target, template4, cv2.TM_CCORR_NORMED)
+        result5 = cv2.matchTemplate(target, template5, cv2.TM_CCORR_NORMED)
+        height150, width150 = result.shape[:2]
+        height160, width160 = result3.shape[:2]
+        # 处理正面瓶盖
+        for i in range(height150):
+            for j in range(width150):
+                Array150[i + theight150 - 1, j + twidth150 - 1] = max(result[i, j], result1[i, j], result2[i, j])
+        # 处理反面瓶盖
+        for i in range(height160):
+            for j in range(width160):
+                Array160[i + theight160 - 1, j + twidth160 - 1] = max(result3[i, j], result4[i, j], result5[i, j])
+        # 减少正反瓶盖的相互干扰
+        for i in range(iheight):
+            for j in range(iwidth):
+                if Array150[i, j] - Array160[i, j] > -0.028:
+                    Array[i, j] = 0
+                else:
+                    Array[i, j] = Array160[i, j]
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
+        # 方框标记反面
+        cv2.rectangle(target, max_loc, (max_loc[0]-twidth160, max_loc[1]-theight160), (0, 0, 255), 2)
+        max_x = int((2*max_loc[0]-twidth160)/2)
+        max_y = int((2*max_loc[1]-theight160)/2)
+        cv2.putText(target, "*", (max_x-1, max_y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+        long_text += '\n[' + str(max_x) + ',' + str(max_y) + ']'
+        temp_loc = max_loc
+        other_loc = max_loc
+        numOfloc = 1
+
+        threshold = 0.9
+        loc = np.where(Array >= threshold)
+        wrong = 40
+        for other_loc in zip(*loc[::-1]):
+            if (temp_loc[0] + wrong < other_loc[0]) or (temp_loc[1] + wrong < other_loc[1]):
+                numOfloc = numOfloc + 1
+                temp_loc = other_loc
+                x = int((2*other_loc[0]-twidth160)/2)
+                y = int((2*other_loc[1]-theight160)/2)
+                if abs(max_x - x) > twidth160/2 or abs(max_y - y) > theight160/2:
+                    cv2.rectangle(target, other_loc, (other_loc[0] - twidth160, other_loc[1] - theight160), (0, 0, 255), 2)
+                    cv2.putText(target, "*", (x-1, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                    long_text += '\n[' + str(x) + ',' + str(y) + ']'
+        # 将opencv图像转化为PIL图像
+        img_output = Image.fromarray(cv2.cvtColor(target,cv2.COLOR_BGR2RGB))
         self.show(img_output)
-        long_text = '背面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
     def profile(self, sc):
