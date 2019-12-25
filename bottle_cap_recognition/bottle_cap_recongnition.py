@@ -125,10 +125,13 @@ class BottleCapRecognition:
         blurred = cv2.GaussianBlur(resized, (5, 5), 0)
         # 进行图片灰度化
         gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
+        cv2.imshow("gray", gray)
         # 进行颜色空间的变换
         lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
         # 进行阈值分割
-        thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)[1]
+        thresh = cv2.threshold(gray, 20, 255, cv2.THRESH_BINARY)[1]
+        
+        #cv2.imshow("Thresh", thresh)
         # 在二值图片中寻找轮廓
         cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
