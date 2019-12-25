@@ -22,14 +22,14 @@ class ColorLabeler:
 		# 初始化一个颜色词典
 		colors = OrderedDict({
 			"red": (255, 0, 0),
-			"green": (0, 255, 0),
+			"yellow": (255, 255, 0),
 			"blue": (0, 0, 255)})
 
 		# 为LAB图像分配空间
 		self.lab = np.zeros((len(colors), 1, 3), dtype="uint8")
 		self.colorNames = []
 
-		# 循环 遍历颜色词典
+		# 循环遍历颜色词典
 		for (i, (name, rgb)) in enumerate(colors.items()):
 			# 进行参数更新
 			self.lab[i] = rgb
@@ -113,7 +113,7 @@ class BottleCapRecognition:
         self.canvas1.create_window(80, 200, anchor='center', window=self.button_profile)
 
         # 黄色侧面检测按钮
-        self.button_profile = Button(self.root, text='黄色侧面检测', command=lambda: self.profile("green"))
+        self.button_profile = Button(self.root, text='黄色侧面检测', command=lambda: self.profile("yellow"))
         self.canvas1.create_window(80, 250, anchor='center', window=self.button_profile)
 
         # 蓝色侧面检测按钮
@@ -216,13 +216,12 @@ class BottleCapRecognition:
             else:
                 goal = sc + " left"
                 text = "{} {}".format(color, shape)
-
-            if(text==goal):
+            if text==goal:
                 if sc == "all":
                     cv2.fillPoly(img_cv,[c],(255, 255, 255))
                 if sc == "red":
                     cv2.fillPoly(img_cv,[c],(0, 0, 255))
-                if sc == "green":
+                if sc == "yellow":
                     cv2.fillPoly(img_cv,[c],(0, 255, 255))
                 if sc == "blue":
                     cv2.fillPoly(img_cv,[c],(255, 0, 0))
