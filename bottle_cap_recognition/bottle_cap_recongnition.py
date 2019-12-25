@@ -310,6 +310,7 @@ class BottleCapRecognition:
         blurred = cv2.GaussianBlur(resized, (5, 5), 0)
         # 进行图片灰度化
         gray = cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY)
+        #cv2.imshow("gray", gray)
         # 进行颜色空间的变换
         lab = cv2.cvtColor(blurred, cv2.COLOR_BGR2LAB)
         # 进行阈值分割
