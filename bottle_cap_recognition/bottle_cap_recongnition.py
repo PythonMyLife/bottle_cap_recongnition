@@ -22,7 +22,7 @@ class ColorLabeler:
 		# 初始化一个颜色词典
 		colors = OrderedDict({
 			"red": (255, 0, 0),
-			"yellow": (255, 165, 0),
+			"yellow": (255, 180, 0),
 			"blue": (0, 0, 255)})
 
 		# 为LAB图像分配空间
@@ -350,7 +350,7 @@ class BottleCapRecognition:
                 if sc == "red":
                     cv2.fillPoly(img_cv,[c],(0, 0, 255))
                 if sc == "yellow":
-                    cv2.fillPoly(img_cv,[c],(0, 255, 255))
+                    cv2.fillPoly(img_cv,[c],(0, 180, 255))
                 if sc == "blue":
                     cv2.fillPoly(img_cv,[c],(255, 0, 0))
                 # 绘制轮廓并显示结果
