@@ -22,7 +22,7 @@ class ColorLabeler:
 		# 初始化一个颜色词典
 		colors = OrderedDict({
 			"red": (255, 0, 0),
-			"yellow": (255, 255, 0),
+			"yellow": (255, 165, 0),
 			"blue": (0, 0, 255)})
 
 		# 为LAB图像分配空间
