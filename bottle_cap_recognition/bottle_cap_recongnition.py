@@ -266,7 +266,7 @@ class BottleCapRecognition:
         cv2.imencode('.jpg', img)[1].tofile(
             'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
         self.photo = Image.open(file)
-        self.smallphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        self.smallphoto = cv2.cvtColor(img,cv2.CO)
         self.bigphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
         image = self.photo
         w, h = image.size
