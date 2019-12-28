@@ -90,87 +90,87 @@ class BottleCapRecognition:
         self.root.resizable(0, 0)
         self.root_frame()
         self.template0 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/1down200.jpg")
+            "templete1/1down200.jpg")
         self.template1 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/2down200.jpg")
+            "templete1/2down200.jpg")
         self.template2 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/3down220.jpg")
+            "templete1/3down220.jpg")
         self.template3 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/4down220.jpg")
+            "templete1/4down220.jpg")
         self.template4 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/5down210.jpg")
+            "templete1/5down210.jpg")
         self.template5 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/6down210.jpg")
+            "templete1/6down210.jpg")
         self.template51 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/7down210.jpg")
+            "templete1/7down210.jpg")
         self.template6 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/1up200.jpg")
+            "templete1/1up200.jpg")
         self.template7 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/2up200.jpg")
+            "templete1/2up200.jpg")
         self.template8 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/3up200.jpg")
+            "templete1/3up200.jpg")
         self.template9 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/4up200.jpg")
+            "templete1/4up200.jpg")
         self.template10 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/5up200.jpg")
+            "templete1/5up200.jpg")
         self.template11 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/6up200.jpg")
+            "templete1/6up200.jpg")
         self.template111 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/61up200.jpg")
+            "templete1/61up200.jpg")
         self.template12 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/7up220.jpg")
+            "templete1/7up220.jpg")
         self.template13 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/8up220.jpg")
+            "templete1/8up220.jpg")
         self.template14 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/9up220.jpg")
+            "templete1/9up220.jpg")
         self.template141 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/91up220.jpg")
+            "templete1/91up220.jpg")
         self.template142 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/92up220.jpg")
+            "templete1/92up220.jpg")
         self.template143 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/93up220.jpg")
+            "templete1/93up220.jpg")
         self.template15 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/10up210.jpg")
+            "templete1/10up210.jpg")
         self.template16 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/11up210.jpg")
+            "templete1/11up210.jpg")
         self.template17 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/12up210.jpg")
+            "templete1/12up210.jpg")
         self.template18 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete1/13up200.jpg")
-        self.btemplate0 = cv2.imread("D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/1up200.jpg")
-        self.btemplate1 = cv2.imread("D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/2up200.jpg")
-        self.btemplate2 = cv2.imread("D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/4up220.jpg")
-        self.btemplate3 = cv2.imread("D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/5up220.jpg")
-        self.btemplate4 = cv2.imread("D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/6up210.jpg")
-        self.btemplate5 = cv2.imread("D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/7up210.jpg")
+            "templete1/13up200.jpg")
+        self.btemplate0 = cv2.imread("templete/1up200.jpg")
+        self.btemplate1 = cv2.imread("templete/2up200.jpg")
+        self.btemplate2 = cv2.imread("templete/4up220.jpg")
+        self.btemplate3 = cv2.imread("templete/5up220.jpg")
+        self.btemplate4 = cv2.imread("templete/6up210.jpg")
+        self.btemplate5 = cv2.imread("templete/7up210.jpg")
         self.btemplate6 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/1down200.jpg")
+            "templete/1down200.jpg")
         self.btemplate7 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/2down200.jpg")
+            "templete/2down200.jpg")
         self.btemplate8 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/31down200.jpg")
+            "templete/31down200.jpg")
         self.btemplate9 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/4down200.jpg")
+            "templete/4down200.jpg")
         self.btemplate10 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/5down200.jpg")
+            "templete/5down200.jpg")
         self.btemplate11 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/6down200.jpg")
+            "templete/6down200.jpg")
         self.btemplate111 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/61down200.jpg")
+            "templete/61down200.jpg")
         self.btemplate12 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/7down220.jpg")
+            "templete/7down220.jpg")
         self.btemplate13 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/8down220.jpg")
+            "templete/8down220.jpg")
         self.btemplate14 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/9down220.jpg")
+            "templete/9down220.jpg")
         self.btemplate15 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/101down210.jpg")
+            "templete/101down210.jpg")
         self.btemplate16 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/11down210.jpg")
+            "templete/11down210.jpg")
         self.btemplate17 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/12down210.jpg")
+            "templete/12down210.jpg")
         self.btemplate18 = cv2.imread(
-            "D:/code/cv/together/bottle_cap_recongnition/bottle_cap_recognition/templete/3down200.jpg")
+            "templete/3down200.jpg")
 
     def root_frame(self):
         # canvas1为左侧操作框，canvas2为右侧上部图像框，canvas3为右侧下部图像框
@@ -333,7 +333,7 @@ class BottleCapRecognition:
         height160, width160 = result0.shape[:2]
         height220, width220 = result2.shape[:2]
         height210, width210 = result4.shape[:2]
-        print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
+        #print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
         for i in range(theight160, height160):
             for j in range(twidth160, width160):
                 MArray160[i + theight160 - 1, j + twidth160 - 1] = max(result0[i, j], result1[i, j])
@@ -357,7 +357,7 @@ class BottleCapRecognition:
                     Array[i, j] = 0
                 else:
                     Array[i, j] = Array160[i, j]
-        print(result0.shape[:2])
+        #print(result0.shape[:2])
         # cv2.normalize(result, result, 0, 1, cv2.NORM_MINMAX, -1 )
 
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
@@ -371,18 +371,18 @@ class BottleCapRecognition:
         while max_val != 0 and max_val > threshold:
             if max_val <= threshold:
                 max_val = 0
-                print("1")
+                #print("1")
                 break
             else:
-                print(max_loc)
+                #print(max_loc)
                 arr.append(max_loc)
                 Array[max_loc[1], max_loc[0]] = 0
-                print(Array[max_loc[1], max_loc[0]])
+                #print(Array[max_loc[1], max_loc[0]])
                 for i in range(max_loc[1] - 100, max_loc[1] + 100):
                     for j in range(max_loc[0] - 100, max_loc[0] + 100):
                         if iheight > i > 0 and iwidth > j > 0:
                             Array[i, j] = 0
-            print(max_val)
+            #print(max_val)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
         for other_loc in arr:
             numOfloc = numOfloc + 1
@@ -437,7 +437,7 @@ class BottleCapRecognition:
         height160, width160 = result0.shape[:2]
         height220, width220 = result2.shape[:2]
         height210, width210 = result4.shape[:2]
-        print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
+        #print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
         for i in range(height160):
             for j in range(width160):
                 MArray160[i + theight160 - 1, j + twidth160 - 1] = max(result0[i, j], result1[i, j])
@@ -460,7 +460,7 @@ class BottleCapRecognition:
                     Array[i, j] = 0
                 else:
                     Array[i, j] = Array160[i, j]
-        print(result0.shape[:2])
+        #print(result0.shape[:2])
         # cv2.normalize(result, result, 0, 1, cv2.NORM_MINMAX, -1 )
 
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
@@ -476,18 +476,18 @@ class BottleCapRecognition:
         while max_val != 0 and max_val > threshold:
             if max_val <= threshold:
                 max_val = 0
-                print("1")
+                #print("1")
                 break
             else:
-                print(max_loc)
+                #print(max_loc)
                 arr.append(max_loc)
                 Array[max_loc[1], max_loc[0]] = 0
-                print(Array[max_loc[1], max_loc[0]])
+                #print(Array[max_loc[1], max_loc[0]])
                 for i in range(max_loc[1] - 100, max_loc[1] + 100):
                     for j in range(max_loc[0] - 100, max_loc[0] + 100):
                         if iheight > i > 0 and iwidth > j > 0:
                             Array[i, j] = 0
-            print(max_val)
+            #print(max_val)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
 
         for other_loc in arr:
