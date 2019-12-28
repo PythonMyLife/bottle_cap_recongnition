@@ -241,8 +241,9 @@ class BottleCapRecognition:
             for j in range(cols):
                 if dilate[i, j] == 255:
                     img[i, j] = (0, 0, 0)  # 此处替换颜色，为BGR通道
-        cv2.imencode('.jpg', img)[1].tofile(
-            'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        #cv2.imencode('.jpg', img)[1].tofile(
+         #   'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        self.smallphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
         img = cv2.imread(file)
         rows, cols, channels = img.shape
         img = cv2.resize(img, None, fx=1, fy=1)
@@ -263,11 +264,12 @@ class BottleCapRecognition:
             for j in range(cols):
                 if dilate[i, j] == 255:
                     img[i, j] = (0, 0, 0)  # 此处替换颜色，为BGR通道
-        cv2.imencode('.jpg', img)[1].tofile(
-            'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
+        #cv2.imencode('.jpg', img)[1].tofile(
+         #   'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
+        self.bigphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
         self.photo = Image.open(file)
-        self.smallphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
-        self.bigphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
+        #self.smallphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        #self.bigphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
         image = self.photo
         w, h = image.size
         if w > 640 or h > 320:
