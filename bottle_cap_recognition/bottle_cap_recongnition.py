@@ -203,9 +203,15 @@ class BottleCapRecognition:
             for j in range(cols):
                 if dilate[i, j] == 255:
                     img[i, j] = (0, 0, 0)  # 此处替换颜色，为BGR通道
+<<<<<<< HEAD
         #cv2.imencode('.jpg', img)[1].tofile(
          #   'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
         self.smallphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+=======
+        cv2.imencode('.jpg', img)[1].tofile(
+            'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        self.smallphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
+>>>>>>> 1dfd5312a16039cf3d5932a87b6d1573a5aeab57
         img = cv2.imread(file)
         rows, cols, channels = img.shape
         img = cv2.resize(img, None, fx=1, fy=1)
@@ -226,12 +232,17 @@ class BottleCapRecognition:
             for j in range(cols):
                 if dilate[i, j] == 255:
                     img[i, j] = (0, 0, 0)  # 此处替换颜色，为BGR通道
+<<<<<<< HEAD
         #cv2.imencode('.jpg', img)[1].tofile(
          #   'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
         self.bigphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+=======
+        cv2.imencode('.jpg', img)[1].tofile(
+            'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
+>>>>>>> 1dfd5312a16039cf3d5932a87b6d1573a5aeab57
         self.photo = Image.open(file)
-        #self.smallphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
-        #self.bigphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
+        self.smallphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        self.bigphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
         image = self.photo
         w, h = image.size
         if w > 640 or h > 320:
@@ -281,7 +292,6 @@ class BottleCapRecognition:
         result9 = cv2.matchTemplate(target, self.template9, cv2.TM_CCORR_NORMED)
         result10 = cv2.matchTemplate(target, self.template10, cv2.TM_CCORR_NORMED)
         result11 = cv2.matchTemplate(target, self.template11, cv2.TM_CCORR_NORMED)
-        result111 = cv2.matchTemplate(target, self.template111, cv2.TM_CCORR_NORMED)
         result12 = cv2.matchTemplate(target, self.template12, cv2.TM_CCORR_NORMED)
         result13 = cv2.matchTemplate(target, self.template13, cv2.TM_CCORR_NORMED)
         result14 = cv2.matchTemplate(target, self.template14, cv2.TM_CCORR_NORMED)
@@ -295,56 +305,57 @@ class BottleCapRecognition:
         height160, width160 = result0.shape[:2]
         height220, width220 = result2.shape[:2]
         height210, width210 = result4.shape[:2]
-        #print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
-        for i in range(theight160, height160):
-            for j in range(twidth160, width160):
+        print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
+        for i in range(height160):
+            for j in range(width160):
                 MArray160[i + theight160 - 1, j + twidth160 - 1] = max(result0[i, j], result1[i, j])
                 Array160[i + theight160 - 1, j + twidth160 - 1] = max(result6[i, j], result7[i, j], result8[i, j],
-                                                                      result9[i, j], result10[i, j], result11[i, j],
-                                                                      result111[i, j])
-        for i in range(theight220, height220):
-            for j in range(twidth220, width220):
+                                                                      result9[i, j], result10[i, j], result11[i, j])
+        for i in range(height220):
+            for j in range(width220):
                 Array220[i + theight220 - 1, j + twidth220 - 1] = max(result12[i, j], result13[i, j], result14[i, j],
                                                                       result141[i, j], result142[i, j], result143[i, j])
                 MArray220[i + theight220 - 1, j + twidth220 - 1] = max(result2[i, j], result3[i, j])
-        for i in range(theight210, height210):
-            for j in range(twidth210, width210):
+        for i in range(height210):
+            for j in range(width210):
                 Array210[i + theight210 - 1, j + twidth210 - 1] = max(result15[i, j], result16[i, j], result17[i, j])
                 MArray210[i + theight210 - 1, j + twidth210 - 1] = max(result4[i, j], result5[i, j], result51[i, j])
-        for i in range(theight160, iheight):
-            for j in range(twidth160, iwidth):
+        for i in range(iheight):
+            for j in range(iwidth):
                 Array160[i, j] = max(Array160[i, j], Array220[i, j], Array210[i, j])
                 MArray160[i, j] = max(MArray160[i, j], MArray220[i, j], MArray210[i, j])
                 if MArray160[i, j] - Array160[i, j] > -0.030:
                     Array[i, j] = 0
                 else:
                     Array[i, j] = Array160[i, j]
-        #print(result0.shape[:2])
+        print(result0.shape[:2])
         # cv2.normalize(result, result, 0, 1, cv2.NORM_MINMAX, -1 )
 
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
-        # 方框标记正面
+
+        cv2.rectangle(target, max_loc, (max_loc[0] - twidth160, max_loc[1] - theight160), (255, 255, 225), 2)
+
+        strmin_val = str(max_val)
+
         temp_loc = max_loc
         other_loc = max_loc
         numOfloc = 1
 
         threshold = 0.95
         arr = []
+        arr.append(max_loc)
         while max_val != 0 and max_val > threshold:
             if max_val <= threshold:
                 max_val = 0
-                #print("1")
                 break
             else:
-                #print(max_loc)
                 arr.append(max_loc)
                 Array[max_loc[1], max_loc[0]] = 0
-                #print(Array[max_loc[1], max_loc[0]])
                 for i in range(max_loc[1] - 100, max_loc[1] + 100):
                     for j in range(max_loc[0] - 100, max_loc[0] + 100):
-                        if iheight > i > 0 and iwidth > j > 0:
+                        if iheight > i >= 0 and iwidth > j >= 0:
                             Array[i, j] = 0
-            #print(max_val)
+            print(max_val)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
         for other_loc in arr:
             numOfloc = numOfloc + 1
