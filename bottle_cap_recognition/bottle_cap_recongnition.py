@@ -171,15 +171,11 @@ class BottleCapRecognition:
         self.button_profile = Button(self.root, text='蓝色侧面检测', command=lambda: self.profile("blue"))
         self.canvas1.create_window(80, 350, anchor='center', window=self.button_profile)
 
-        # 形态检测按钮
-        self.button_all = Button(self.root, text='形态检测', command=lambda: self.all())
-        self.canvas1.create_window(80, 400, anchor='center', window=self.button_all)
-
         # 输出语句
         self.output = StringVar()
         # 输出框
         self.text = Label(self.root, textvariable=self.output)
-        self.canvas1.create_window(80, 440, anchor='n', window=self.text)
+        self.canvas1.create_window(80, 390, anchor='n', window=self.text)
 
     def choose(self, canvas2):
         file = filedialog.askopenfilename(parent=self.root, initialdir="C:/", title='Choose an image.')
@@ -203,15 +199,8 @@ class BottleCapRecognition:
             for j in range(cols):
                 if dilate[i, j] == 255:
                     img[i, j] = (0, 0, 0)  # 此处替换颜色，为BGR通道
-<<<<<<< HEAD
-        #cv2.imencode('.jpg', img)[1].tofile(
-         #   'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
+        cv2.imencode('.jpg', img)[1].tofile('output/temp.jpg')
         self.smallphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-=======
-        cv2.imencode('.jpg', img)[1].tofile(
-            'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
-        self.smallphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
->>>>>>> 1dfd5312a16039cf3d5932a87b6d1573a5aeab57
         img = cv2.imread(file)
         rows, cols, channels = img.shape
         img = cv2.resize(img, None, fx=1, fy=1)
@@ -232,17 +221,10 @@ class BottleCapRecognition:
             for j in range(cols):
                 if dilate[i, j] == 255:
                     img[i, j] = (0, 0, 0)  # 此处替换颜色，为BGR通道
-<<<<<<< HEAD
-        #cv2.imencode('.jpg', img)[1].tofile(
-         #   'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
-        self.bigphoto =cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-=======
-        cv2.imencode('.jpg', img)[1].tofile(
-            'D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
->>>>>>> 1dfd5312a16039cf3d5932a87b6d1573a5aeab57
+        cv2.imencode('.jpg', img)[1].tofile('output/temp1.jpg')
         self.photo = Image.open(file)
-        self.smallphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp.jpg')
-        self.bigphoto = Image.open('D:\\code\\cv\\final\\bottle_cap_recongnition\\bottle_cap_recognition\\output\\temp1.jpg')
+        self.smallphoto = Image.open('output/temp.jpg')
+        self.bigphoto = Image.open('output/temp1.jpg')
         image = self.photo
         w, h = image.size
         if w > 640 or h > 320:
@@ -305,7 +287,7 @@ class BottleCapRecognition:
         height160, width160 = result0.shape[:2]
         height220, width220 = result2.shape[:2]
         height210, width210 = result4.shape[:2]
-        print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
+        # print(iheight, iwidth, theight160, theight160, theight220, twidth220, height160, width160, height220, width220)
         for i in range(height160):
             for j in range(width160):
                 MArray160[i + theight160 - 1, j + twidth160 - 1] = max(result0[i, j], result1[i, j])
@@ -328,7 +310,7 @@ class BottleCapRecognition:
                     Array[i, j] = 0
                 else:
                     Array[i, j] = Array160[i, j]
-        print(result0.shape[:2])
+        # print(result0.shape[:2])
         # cv2.normalize(result, result, 0, 1, cv2.NORM_MINMAX, -1 )
 
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
@@ -343,7 +325,6 @@ class BottleCapRecognition:
 
         threshold = 0.95
         arr = []
-        arr.append(max_loc)
         while max_val != 0 and max_val > threshold:
             if max_val <= threshold:
                 max_val = 0
@@ -355,7 +336,7 @@ class BottleCapRecognition:
                     for j in range(max_loc[0] - 100, max_loc[0] + 100):
                         if iheight > i >= 0 and iwidth > j >= 0:
                             Array[i, j] = 0
-            print(max_val)
+            # print(max_val)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(Array)
         for other_loc in arr:
             numOfloc = numOfloc + 1
@@ -538,13 +519,6 @@ class BottleCapRecognition:
         # 将opencv图像转化为PIL图像
         img_output = Image.fromarray(cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB))
         self.show(img_output)
-        self.output.set(long_text)
-
-    def all(self):
-        img_input = self.photo
-        img_output = img_input
-        self.show(img_output)
-        long_text = '正面瓶盖的坐标为\n' + '[1,1]' + '\n背面瓶盖的坐标为\n' + '[1,1]' + '\n侧面瓶盖的坐标为\n' + '[1,1]'
         self.output.set(long_text)
 
 
