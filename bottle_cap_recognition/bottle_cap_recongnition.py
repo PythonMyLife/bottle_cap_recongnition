@@ -89,88 +89,50 @@ class BottleCapRecognition:
         self.root.geometry('800x640')
         self.root.resizable(0, 0)
         self.root_frame()
-        self.template0 = cv2.imread(
-            "templete1/1down200.jpg")
-        self.template1 = cv2.imread(
-            "templete1/2down200.jpg")
-        self.template2 = cv2.imread(
-            "templete1/3down220.jpg")
-        self.template3 = cv2.imread(
-            "templete1/4down220.jpg")
-        self.template4 = cv2.imread(
-            "templete1/5down210.jpg")
-        self.template5 = cv2.imread(
-            "templete1/6down210.jpg")
-        self.template51 = cv2.imread(
-            "templete1/7down210.jpg")
-        self.template6 = cv2.imread(
-            "templete1/1up200.jpg")
-        self.template7 = cv2.imread(
-            "templete1/2up200.jpg")
-        self.template8 = cv2.imread(
-            "templete1/3up200.jpg")
-        self.template9 = cv2.imread(
-            "templete1/4up200.jpg")
-        self.template10 = cv2.imread(
-            "templete1/5up200.jpg")
-        self.template11 = cv2.imread(
-            "templete1/6up200.jpg")
-        self.template111 = cv2.imread(
-            "templete1/61up200.jpg")
-        self.template12 = cv2.imread(
-            "templete1/7up220.jpg")
-        self.template13 = cv2.imread(
-            "templete1/8up220.jpg")
-        self.template14 = cv2.imread(
-            "templete1/9up220.jpg")
-        self.template141 = cv2.imread(
-            "templete1/91up220.jpg")
-        self.template142 = cv2.imread(
-            "templete1/92up220.jpg")
-        self.template143 = cv2.imread(
-            "templete1/93up220.jpg")
-        self.template15 = cv2.imread(
-            "templete1/10up210.jpg")
-        self.template16 = cv2.imread(
-            "templete1/11up210.jpg")
-        self.template17 = cv2.imread(
-            "templete1/12up210.jpg")
-        self.template18 = cv2.imread(
-            "templete1/13up200.jpg")
+        self.template0 = cv2.imread("templete1/1down200.jpg")
+        self.template1 = cv2.imread("templete1/2down200.jpg")
+        self.template2 = cv2.imread("templete1/3down220.jpg")
+        self.template3 = cv2.imread("templete1/4down220.jpg")
+        self.template4 = cv2.imread("templete1/5down210.jpg")
+        self.template5 = cv2.imread("templete1/6down210.jpg")
+        self.template51 = cv2.imread("templete1/7down210.jpg")
+        self.template6 = cv2.imread("templete1/1up200.jpg")
+        self.template7 = cv2.imread("templete1/2up200.jpg")
+        self.template8 = cv2.imread("templete1/3up200.jpg")
+        self.template9 = cv2.imread("templete1/4up200.jpg")
+        self.template10 = cv2.imread("templete1/5up200.jpg")
+        self.template11 = cv2.imread("templete1/6up200.jpg")
+        self.template111 = cv2.imread("templete1/61up200.jpg")
+        self.template12 = cv2.imread("templete1/7up220.jpg")
+        self.template13 = cv2.imread("templete1/8up220.jpg")
+        self.template14 = cv2.imread("templete1/9up220.jpg")
+        self.template141 = cv2.imread("templete1/91up220.jpg")
+        self.template142 = cv2.imread("templete1/92up220.jpg")
+        self.template143 = cv2.imread("templete1/93up220.jpg")
+        self.template15 = cv2.imread("templete1/10up210.jpg")
+        self.template16 = cv2.imread("templete1/11up210.jpg")
+        self.template17 = cv2.imread("templete1/12up210.jpg")
+        self.template18 = cv2.imread("templete1/13up200.jpg")
         self.btemplate0 = cv2.imread("templete/1up200.jpg")
         self.btemplate1 = cv2.imread("templete/2up200.jpg")
         self.btemplate2 = cv2.imread("templete/4up220.jpg")
         self.btemplate3 = cv2.imread("templete/5up220.jpg")
         self.btemplate4 = cv2.imread("templete/6up210.jpg")
         self.btemplate5 = cv2.imread("templete/7up210.jpg")
-        self.btemplate6 = cv2.imread(
-            "templete/1down200.jpg")
-        self.btemplate7 = cv2.imread(
-            "templete/2down200.jpg")
-        self.btemplate8 = cv2.imread(
-            "templete/31down200.jpg")
-        self.btemplate9 = cv2.imread(
-            "templete/4down200.jpg")
-        self.btemplate10 = cv2.imread(
-            "templete/5down200.jpg")
-        self.btemplate11 = cv2.imread(
-            "templete/6down200.jpg")
-        self.btemplate111 = cv2.imread(
-            "templete/61down200.jpg")
-        self.btemplate12 = cv2.imread(
-            "templete/7down220.jpg")
-        self.btemplate13 = cv2.imread(
-            "templete/8down220.jpg")
-        self.btemplate14 = cv2.imread(
-            "templete/9down220.jpg")
-        self.btemplate15 = cv2.imread(
-            "templete/101down210.jpg")
-        self.btemplate16 = cv2.imread(
-            "templete/11down210.jpg")
-        self.btemplate17 = cv2.imread(
-            "templete/12down210.jpg")
-        self.btemplate18 = cv2.imread(
-            "templete/3down200.jpg")
+        self.btemplate6 = cv2.imread("templete/1down200.jpg")
+        self.btemplate7 = cv2.imread("templete/2down200.jpg")
+        self.btemplate8 = cv2.imread("templete/31down200.jpg")
+        self.btemplate9 = cv2.imread("templete/4down200.jpg")
+        self.btemplate10 = cv2.imread("templete/5down200.jpg")
+        self.btemplate11 = cv2.imread("templete/6down200.jpg")
+        self.btemplate111 = cv2.imread("templete/61down200.jpg")
+        self.btemplate12 = cv2.imread("templete/7down220.jpg")
+        self.btemplate13 = cv2.imread("templete/8down220.jpg")
+        self.btemplate14 = cv2.imread("templete/9down220.jpg")
+        self.btemplate15 = cv2.imread("templete/101down210.jpg")
+        self.btemplate16 = cv2.imread("templete/11down210.jpg")
+        self.btemplate17 = cv2.imread("templete/12down210.jpg")
+        self.btemplate18 = cv2.imread("templete/3down200.jpg")
 
     def root_frame(self):
         # canvas1为左侧操作框，canvas2为右侧上部图像框，canvas3为右侧下部图像框
